@@ -2380,7 +2380,7 @@ class EcowittClient(Consumer):
             'wh65batt': 'wh65_battery',
             'pm25_ch1': 'pm2_5',
             'pm25batt1': 'pm25_battery',
-            'lightning_num': 'lightning_strike_count',
+            'lightning_num': 'lightning_count_daily',
             'lightning_time': 'lightning_time',
             'lightning': 'lightning_distance',
         }
@@ -2439,8 +2439,8 @@ class EcowittClient(Consumer):
                     pkt['rain'] = self._delta_rain(newtot, self._last_rain)
                     self._last_rain = newtot
 
-                if 'lightning_strike_count' in pkt:
-                    new_strikes_total = pkt['lightning_strike_count']
+                if 'lightning_count_daily' in pkt:
+                    new_strikes_total = pkt['lightning_count_daily']
                     pkt['lightning_strike_count'] = self._delta_strikes(new_strikes_total, self._last_strikes_total)
                     self._last_strikes_total = new_strikes_total
 

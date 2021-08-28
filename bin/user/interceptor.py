@@ -2444,6 +2444,14 @@ class EcowittClient(Consumer):
                     pkt['lightning_strike_count'] = self._delta_strikes(new_strikes_total, self._last_strikes_total)
                     self._last_strikes_total = new_strikes_total
 
+                # Somehow the ecowitt protocol uses km as distance unit for the lightning sensor,
+                # whereas for the other sensors US units are used.
+                # WeeWX will interpret it as miles which leads to wrong data.
+                # Therefore the distance is converted here (km -> miles)
+                # https://www.wxforum.net/index.php?topic=39454.0
+                if 'lightning_distance' in pkt:
+                    pkt['lightning_distance'] = pkt['lightning_distance'] * 0.621371
+
             except ValueError as e:
                 logerr("parse failed for %s: %s" % (s, e))
             return pkt

@@ -2460,6 +2460,10 @@ class EcowittClient(Consumer):
         def decode_float(x):
             # these stations send a value of -9999 to indicate no value, so
             # convert that to a proper None.
+            # also the lightning sensor might send empty data when the gateway is restarted,
+            # so convert empty values to a proper None
+            if x == "":
+                x = None
             x = Consumer.Parser.decode_float(x)
             return None if x == -9999 else x
 

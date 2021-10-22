@@ -2450,7 +2450,8 @@ class EcowittClient(Consumer):
                 # Therefore the distance is converted here (km -> miles)
                 # https://www.wxforum.net/index.php?topic=39454.0
                 if 'lightning_distance' in pkt:
-                    pkt['lightning_distance'] = pkt['lightning_distance'] * 0.621371
+                    if pkt['lightning_distance'] is not None:
+                        pkt['lightning_distance'] = pkt['lightning_distance'] * 0.621371
 
             except ValueError as e:
                 logerr("parse failed for %s: %s" % (s, e))
